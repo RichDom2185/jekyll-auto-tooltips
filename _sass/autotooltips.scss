@@ -43,7 +43,7 @@
       border-color: black transparent transparent transparent;
     }
 
-    :last-child {
+    > *:last-child {
       font-size: smaller;
       color: lightgray;
     }

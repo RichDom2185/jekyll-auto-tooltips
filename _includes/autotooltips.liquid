@@ -3,7 +3,7 @@
 {% endcomment %}
 {% capture newline %}
 {% endcapture %}
-{% assign entry_names = site.glossary | map: 'name' %}
+{% assign entry_names = page.tooltips | map: 'name' %}
 {% capture entry_keys %}{% for name in entry_names %}{{ name | downcase | slugify }};{% endfor %}{% endcapture %}
 {% assign entry_keys = entry_keys | split: ';' %}
 {%- assign nodes = include.html
@@ -14,12 +14,12 @@
 {%- for node in nodes offset:1 -%}
   {% assign data = node | split: ']]' %}{% assign tag = data | first | strip | split: ':' %}{% assign key = tag | first | strip %}{% assign label = tag | last | strip %}
   {%- if entry_keys contains key -%}
-    {%- for entry in site.glossary -%}
+    {%- for entry in page.tooltips -%}
       {%- if entry_keys[forloop.index0] == key -%}
-        {% assign entry_data = entry.content | split: newline | first | markdownify | strip_html %}
+        {% assign entry_data = entry.content | strip | markdownify | strip %}
         <span class="def-tooltip">
           <a href="#glossary-{{ key }}" data-entry_data="{{ entry_data }}">{{ label }}</a>
-          <span class="popup">{{ entry_data }}<br>
+          <span class="popup">{{ entry_data }}
             <i>Click to view glossary</i>
           </span>
         </span>{% break %}
