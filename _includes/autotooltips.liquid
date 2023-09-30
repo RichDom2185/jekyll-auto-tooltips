@@ -27,6 +27,8 @@
     {%- for tail in data offset:1 -%}
       {{ tail }}
     {%- endfor -%}
+  {%- elsif key == "" -%}
+    [[{{ node | replace_first: ":", "" }}
   {%-else -%}
     [[{{ node }}
   {%- endif -%}
