@@ -1,0 +1,88 @@
+.def-tooltip {
+  position: relative;
+  display: inline-block;
+
+  > a {
+    color: inherit !important;
+    text-decoration: underline dotted;
+  }
+
+  > .popup {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    $width: 180px;
+    width: $width;
+    margin-left: calc(-#{$width} / 2);
+    box-sizing: border-box;
+    padding: 6px 10px;
+
+    background-color: rgba($color: black, $alpha: 0.9);
+    border-radius: 6px;
+    color: white;
+    font-size: small;
+    font-style: normal;
+
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    text-align: center;
+
+    // Popup arrow
+    &::after {
+      $arrow-width: 5px;
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -$arrow-width;
+      border-width: $arrow-width;
+      border-style: solid;
+      border-color: black transparent transparent transparent;
+    }
+
+    > *:last-child {
+      font-size: smaller;
+      color: lightgray;
+    }
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity ease-in-out 150ms;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  &:hover > .popup {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media print {
+  .def-tooltip {
+    > a {
+      // For PrinceXML compatibility
+      text-decoration: underline;
+      text-underline-style: dotted;
+
+      // Only works on PrinceXML
+      &::after {
+        content: attr(data-entry_data);
+        float: footnote page;
+        font-size: 0.6rem;
+        text-align: left;
+        color: black;
+        font-style: normal;
+        text-decoration: none;
+
+        // Make it look nice(r) on Chrome
+        vertical-align: top;
+      }
+    }
+  }
+}
